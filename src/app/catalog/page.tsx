@@ -1,23 +1,19 @@
-import Home from "@/components/screens/home/Home";
+import Catalog from "@/components/screens/catalog/Catalog";
 import { Metadata } from "next";
-import getAllCategories from "./lib/getAllCategories";
 
 export const metadata: Metadata = {
-  title: "Домой | КРЕП-ЧЕ",
+  title: "Каталог | КРЕП-ЧЕ",
   description:
     "Сайт небольшой компании, которая занимается оптовой продажей крепежа, шурупов, саморезов, электродов и многого другого",
   openGraph: {
-    title: "Домой | КРЕП-ЧЕ",
+    title: "Каталог | КРЕП-ЧЕ",
     siteName: "КРЕП-ЧЕ",
     description:
       "Сайт небольшой компании, которая занимается оптовой продажей крепежа, шурупов, саморезов, электродов и многого другого",
+    images: "http://krep-che.ru/icons/favicon.ico",
   },
 };
 
-const HomePage = () => {
-  const categoriesData = getAllCategories();
-
-  return <Home />;
-};
-
-export default HomePage;
+export default function CatalogPage() {
+  return <Catalog />;
+}

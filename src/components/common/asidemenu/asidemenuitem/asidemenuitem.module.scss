@@ -1,0 +1,24 @@
+.category {
+  display: flex;
+  align-items: center;
+  width: 300px;
+  padding: 1rem;
+  background-color: #272727;
+  border: 1px solid #343434;
+  text-decoration: none;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover,
+  &:focus {
+    background-color: #202020;
+  }
+
+  svg {
+    transform: rotate(90deg);
+    width: 15px;
+    height: 15px;
+    margin-right: 1rem;
+  }
+}
