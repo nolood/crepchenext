@@ -1,6 +1,7 @@
 import Home from "@/components/screens/home/Home";
-import { Metadata } from "next";
-import getAllCategories from "./lib/getAllCategories";
+import { Metadata, NextPage } from "next";
+import fetchCategories from "./lib/fetchCategories";
+import { ICategory } from "@/types/ICategory";
 
 export const metadata: Metadata = {
   title: "Домой | КРЕП-ЧЕ",
@@ -14,10 +15,9 @@ export const metadata: Metadata = {
   },
 };
 
-const HomePage = () => {
-  const categoriesData = getAllCategories();
-
-  return <Home />;
+const HomePage: NextPage = async () => {
+  const categories: ICategory[] = await fetchCategories();
+  return <Home categories={categories} />;
 };
 
 export default HomePage;

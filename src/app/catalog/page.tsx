@@ -1,5 +1,11 @@
 import Catalog from "@/components/screens/catalog/Catalog";
-import { Metadata } from "next";
+import { Metadata, NextPage } from "next";
+import { ISubcategory } from "@/types/ISubcategory";
+import fetchSubcategories from "../lib/fetchSubcategories";
+import fetchCategories from "../lib/fetchCategories";
+import { ICategory } from "@/types/ICategory";
+import { IItem } from "@/types/IItem";
+import fetchItems from "../lib/fetchItems";
 
 export const metadata: Metadata = {
   title: "Каталог | КРЕП-ЧЕ",
@@ -14,6 +20,26 @@ export const metadata: Metadata = {
   },
 };
 
-export default function CatalogPage() {
-  return <Catalog />;
+interface CatalogPageProps {
+  searchParams: any;
 }
+
+const CatalogPage: NextPage<CatalogPageProps> = async ({ searchParams }) => {
+  const categoryId = searchParams.category;
+  const subcategoryId = searchParams.subcategory;
+  const subcategories: ISubcategory[] = categoryId
+    ? await fetchSubcategories(categoryId)
+    : null;
+  const categories: ICategory[] = await fetchCategories();
+  const items: IItem[] = await fetchItems(categoryId, subcategoryId);
+  return (
+    <Catalog
+      subcategories={subcategories}
+      categories={categories}
+      categoryId={categoryId}
+      items={items}
+    />
+  );
+};
+
+export default CatalogPage;

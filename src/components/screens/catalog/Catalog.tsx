@@ -1,12 +1,35 @@
 import type { FC } from "react";
 import Layout from "@/components/layout/Layout";
+import { ISubcategory } from "@/types/ISubcategory";
+import AsideMenu from "@/components/common/asidemenu/AsideMenu";
+import { ICategory } from "@/types/ICategory";
+import styles from "./catalog.module.scss";
+import { IItem } from "@/types/IItem";
+import ItemsList from "@/components/itemslist/ItemsList";
 
-interface CatalogProps {}
+interface CatalogProps {
+  subcategories: ISubcategory[];
+  categories: ICategory[];
+  categoryId: string;
+  items: IItem[];
+}
 
-const Catalog: FC<CatalogProps> = () => {
+const Catalog: FC<CatalogProps> = ({
+  subcategories,
+  categories,
+  categoryId,
+  items,
+}) => {
   return (
     <Layout>
-      <div>Catalog</div>
+      <div className={styles.wrapper}>
+        <AsideMenu
+          subcategories={subcategories}
+          categories={categories}
+          categoryId={categoryId}
+        />
+        <ItemsList items={items} />
+      </div>
     </Layout>
   );
 };
