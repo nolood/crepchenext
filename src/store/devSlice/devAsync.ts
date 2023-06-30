@@ -70,13 +70,17 @@ export const fetchSubcategories = createAsyncThunk(
 );
 
 export const addItems = createAsyncThunk(
-  "user/fetchSubcategoriesStatus",
+  "user/addItemsStatus",
   async (items: IItem[]) => {
-    for (const item of items) {
-      await fetch(`${process.env.API_URL}item`, {
-        method: "POST",
-      });
-    }
+    fetch(`${process.env.API_URL}item/all`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        items,
+      }),
+    });
   }
 );
 
