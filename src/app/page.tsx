@@ -1,5 +1,10 @@
 import Home from "@/components/screens/home/Home";
-import { Metadata, NextPage } from "next";
+import {
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  Metadata,
+  NextPage,
+} from "next";
 import fetchCategories from "./lib/fetchCategories";
 import { ICategory } from "@/types/ICategory";
 
@@ -15,7 +20,7 @@ export const metadata: Metadata = {
   },
 };
 
-const HomePage: NextPage = async () => {
+const HomePage = async () => {
   const categories: ICategory[] = await fetchCategories();
   return <Home categories={categories} />;
 };
