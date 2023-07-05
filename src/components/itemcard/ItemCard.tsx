@@ -17,7 +17,7 @@ const ItemCard: FC<ItemCardProps> = ({ item }) => {
           src={`http://krepcheapi.ru/${item.img}`}
           alt={item.title}
           width={300}
-          height={100}
+          height={175}
         />
         <div className={styles.wrapper}>
           <h4>{item.title}</h4>
@@ -27,7 +27,7 @@ const ItemCard: FC<ItemCardProps> = ({ item }) => {
           </div>
         </div>
       </Link>
-      <ItemCardButton />
+      <ItemCardButton item={item} />
     </li>
   );
 };

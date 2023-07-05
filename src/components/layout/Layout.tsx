@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { type FC } from "react";
 import Providers from "@/providers/Providers";
 import Header from "@/components/layout/header/Header";
 import { ILayout } from "./layout.interface";

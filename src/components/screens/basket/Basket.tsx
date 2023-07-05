@@ -1,10 +1,16 @@
 import Layout from "@/components/layout/Layout";
-import React from "react";
+import BasketList from "./basketlist/BasketList";
+import styles from "./basket.module.scss";
+import BasketManaging from "./basketmanaging/BasketManaging";
 
 const Basket = () => {
   return (
     <Layout>
-      <div>Basket</div>
+      <div>
+        <h1 className={styles.title}>Корзина</h1>
+        <BasketList />
+        <BasketManaging />
+      </div>
     </Layout>
   );
 };

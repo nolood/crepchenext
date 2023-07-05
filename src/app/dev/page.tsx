@@ -1,5 +1,7 @@
+import Dev from "@/components/screens/dev/Dev";
+
 const DevPage = () => {
-  return <div>dev</div>;
+  return <Dev />;
 };
 
 export default DevPage;

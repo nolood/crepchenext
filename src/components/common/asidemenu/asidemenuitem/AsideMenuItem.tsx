@@ -11,7 +11,7 @@ interface AsideMenuItemProps {
 const AsideMenuItem: FC<AsideMenuItemProps> = ({ title, id }) => {
   return (
     <li>
-      <Link className={styles.category} href={`/catalog?category=${id}&page=1`}>
+      <Link className={styles.category} href={`/catalog?category=${id}`}>
         <ArrowIcon />
         <span>{title}</span>
       </Link>

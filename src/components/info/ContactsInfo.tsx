@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import styles from "./info.module.scss";
 
-interface ContactsInfoProps {}
+interface ContactsInfoProps { }
 
 const ContactsInfo: FC<ContactsInfoProps> = () => {
   return (

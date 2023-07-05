@@ -21,6 +21,7 @@ import { IItem } from "@/types/IItem";
 import {
   addItems,
   changeItemsCategory,
+  deleteItems,
   fetchAllItems,
 } from "@/store/devSlice/devAsync";
 
@@ -64,7 +65,7 @@ const ChangeItems = () => {
     };
   };
   const handleAddFiles = () => {
-    if (itemsData.length > 5) {
+    if (itemsData.length > 1) {
       dispatch(addItems(itemsData));
     }
   };
@@ -80,6 +81,10 @@ const ChangeItems = () => {
 
   const handleAddPopItems = () => {
     // dispatch(addPopItems(selection));
+  };
+
+  const handleDeleteItems = () => {
+    dispatch(deleteItems(selection));
   };
 
   useEffect(() => {
@@ -132,6 +137,14 @@ const ChangeItems = () => {
           </Button>
           <Button
             variant="outlined"
+            sx={{ height: "100%", ml: 2 }}
+            onClick={handleDeleteItems}
+            size="small"
+          >
+            Удалить выбранное
+          </Button>
+          {/* <Button
+            variant="outlined"
             sx={{ height: "100%", mr: 2, ml: 2 }}
             onClick={handleAddPromoItems}
             size="small"
@@ -145,7 +158,7 @@ const ChangeItems = () => {
             size="small"
           >
             Добавить в pop
-          </Button>
+          </Button> */}
           <Input
             type="file"
             sx={{ margin: "0 20px" }}

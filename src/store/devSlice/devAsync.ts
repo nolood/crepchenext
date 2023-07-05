@@ -72,14 +72,9 @@ export const fetchSubcategories = createAsyncThunk(
 export const addItems = createAsyncThunk(
   "user/addItemsStatus",
   async (items: IItem[]) => {
-    fetch(`${process.env.API_URL}item/all`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        items,
-      }),
+    console.log(items);
+    axios.post(`${process.env.API_URL}item/all`, {
+      items,
     });
   }
 );
@@ -113,6 +108,15 @@ export const changeItemsCategory = createAsyncThunk(
     formData.append("img", image);
 
     await axios.post(`${process.env.API_URL}item/changecategory`, formData);
+  }
+);
+
+export const deleteItems = createAsyncThunk(
+  "user/deleteItems",
+  async (items: GridRowSelectionModel) => {
+    axios.post(`${process.env.API_URL}item/delete`, {
+      items,
+    });
   }
 );
 

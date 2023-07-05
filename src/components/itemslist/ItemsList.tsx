@@ -9,9 +9,17 @@ interface ItemsListProps {
 
 const ItemsList: FC<ItemsListProps> = ({ items }) => {
   return (
-    <ul className={styles.list}>
-      {items && items?.map((item) => <ItemCard key={item.id} item={item} />)}
-    </ul>
+    <>
+      {items.length ? (
+        <ul className={styles.list}>
+          {items?.map((item) => (
+            <ItemCard key={item.id} item={item} />
+          ))}
+        </ul>
+      ) : (
+        <div className={styles.info}>Пока здесь ничего нет но скоро будет</div>
+      )}
+    </>
   );
 };
 

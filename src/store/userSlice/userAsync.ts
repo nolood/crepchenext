@@ -1,82 +1,130 @@
-// import { ActionReducerMapBuilder, createAsyncThunk } from "@reduxjs/toolkit";
-// import axios from "axios";
+import { IAuthData } from "@/types/IAuthData";
+import { IBasket } from "@/types/IBasket";
+import { IBasketOrig } from "@/types/IBasketOrig";
+import { IItem } from "@/types/IItem";
+import { IUserState } from "@/types/IUserState";
+import { ActionReducerMapBuilder, createAsyncThunk } from "@reduxjs/toolkit";
+import axios, { AxiosResponse } from "axios";
 
-// export const loginUser = createAsyncThunk(
-//   "user/loginUserStatus",
-//   async ({ email, password }: AuthData) => {
-//     return axios
-//       .post(`${import.meta.env.VITE_SERVER_URL}/user/login`, {
-//         email,
-//         password,
-//       })
-//       .then((res) => res.data)
-//       .catch((error) => error.response.data);
-//   }
-// );
+export const loginUser = createAsyncThunk(
+  "user/loginUserStatus",
+  async ({ email, password }: IAuthData) => {
+    return await axios
+      .post(
+        `${process.env.API_URL}user/login?email=${email}&password=${password}`
+      )
+      .then((res) => res.data)
+      .catch((e) => {
+        throw e.response.data;
+      });
+  }
+);
 
-// export const regUser = createAsyncThunk(
-//   "user/regUserStatus",
-//   async ({ email, password }: AuthData) => {
-//     return axios
-//       .post(`${import.meta.env.VITE_SERVER_URL}/user/registration`, {
-//         email,
-//         password,
-//       })
-//       .then((res) => res.data)
-//       .catch((error) => error.response.data);
-//   }
-// );
+export const regUser = createAsyncThunk(
+  "user/regUserStatus",
+  async ({ email, password }: IAuthData) => {
+    await axios
+      .post(
+        `${process.env.API_URL}user/registration?email=${email}&password=${password}`
+      )
+      .catch((e) => {
+        throw e.response.data;
+      });
+  }
+);
 
-// export const checkAuth = createAsyncThunk(
-//   "user/checkAuthStatus",
-//   async (token: string) => {
-//     return axios
-//       .get(`${import.meta.env.VITE_SERVER_URL}/user/auth`, {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       })
-//       .then((res) => res.data.auth)
-//       .catch(() => false);
-//   }
-// );
+export const checkIsAuth = createAsyncThunk(
+  "user/checkIsAuthStatus",
+  async () => {
+    const token = JSON.parse(String(localStorage.getItem("krepche-token")));
+    const userId = await axios.get(`${process.env.API_URL}user/auth`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return userId.data;
+  }
+);
 
-// export const extraReducers = (builder: ActionReducerMapBuilder<UserState>) => {
-//   builder.addCase(loginUser.fulfilled, (state, action) => {
-//     if (action.payload.message === "success") {
-//       localStorage.setItem(
-//         "crepchetoken",
-//         JSON.stringify(action.payload.token)
-//       );
-//       state.isAuth = true;
-//       state.message.title = "Вход успешно выполнен";
-//       state.message.type = "success";
-//     } else {
-//       state.message.title = action.payload;
-//       state.message.type = "error";
-//     }
-//   });
+export const getBasket = createAsyncThunk("user/getBasketStatus", async () => {
+  const ids: IBasket[] =
+    JSON.parse(String(localStorage.getItem("krepche-basket"))) || [];
+  const items: IItem[] | Array<IItem | null> = await axios
+    .post(`${process.env.API_URL}item/ids`, {
+      itemsIds: JSON.stringify(ids.map((item) => item.id)),
+    })
+    .then((res) => res.data);
+  const newItems = items.map((item) => {
+    if (item !== null) {
+      const id = item?.id;
+      const found = ids.find((obj) => obj.id === id);
+      return found ? { ...item, count: found.count } : { ...item };
+    } else {
+      return null;
+    }
+  });
+  return newItems as IBasketOrig[] | Array<IBasketOrig | null>;
+});
 
-//   builder.addCase(regUser.fulfilled, (state, action) => {
-//     if (action.payload === "success") {
-//       state.message.title = "Регистрация прошла успешно!";
-//       state.message.type = "success";
-//     } else {
-//       state.message.title = action.payload;
-//       state.message.type = "error";
-//     }
-//   });
+export const getSearchItems = createAsyncThunk(
+  "user/getSearchItemsStatus",
+  async (value: string) => {
+    if (value.length > 0) {
+      const items: IItem[] = await axios
+        .post(`${process.env.API_URL}item/search?search=${value}`)
+        .then((res) => res.data);
+      return items !== undefined ? items : [];
+    }
+  }
+);
 
-//   builder.addCase(checkAuth.fulfilled, (state, action) => {
-//     state.isAuth = action.payload === true;
-//     state.isLoading = false;
-//   });
+export const extraReducers = (builder: ActionReducerMapBuilder<IUserState>) => {
+  builder.addCase(getSearchItems.fulfilled, (state, action) => {
+    //@ts-ignore
+    state.searchItems = action.payload;
+  });
 
-//   builder.addCase(checkAuth.pending, (state) => {
-//     state.isLoading = true;
-//   });
+  builder.addCase(regUser.fulfilled, (state) => {
+    state.message = {
+      open: true,
+      title: "Регистрация прошла успешно!",
+      type: "success",
+    };
+  });
+  builder.addCase(regUser.rejected, (state, action) => {
+    state.message = {
+      open: true,
+      title: String(action.error.message),
+      type: "error",
+    };
+  });
 
-//   builder.addCase(checkAuth.rejected, (state) => {
-//     state.isLoading = false;
-//   });
-// };
+  builder.addCase(loginUser.fulfilled, (state, action) => {
+    state.message = {
+      open: true,
+      title: "Вы вошли в аккаунт!",
+      type: "success",
+    };
+    localStorage.setItem("krepche-token", JSON.stringify(action.payload.token));
+    state.isAuth = true;
+  });
+  builder.addCase(loginUser.rejected, (state, action) => {
+    state.message = {
+      open: true,
+      title: String(action.error.message),
+      type: "error",
+    };
+  });
+
+  builder.addCase(checkIsAuth.fulfilled, (state, action) => {
+    state.userId = action.payload.userId;
+    state.isAuth = true;
+  });
+  builder.addCase(checkIsAuth.rejected, (state, action) => {
+    state.isAuth = false;
+  });
+
+  builder.addCase(getBasket.fulfilled, (state, action) => {
+    state.basketOrig = action.payload;
+  });
+};

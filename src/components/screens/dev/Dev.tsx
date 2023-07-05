@@ -6,8 +6,17 @@ import CategoriesOverview from "@/components/DevPageComponents/CategoriesOvervie
 import ChangeItems from "@/components/DevPageComponents/ChangeItems";
 import { Stack } from "@mui/material";
 import Layout from "@/components/layout/Layout";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const Dev = () => {
+  const router = useRouter();
+  useEffect(() => {
+    const id = localStorage.getItem("KGFOASDJGNMDFMFD");
+    if (id !== process.env.PASS) {
+      router.replace("/");
+    }
+  }, []);
   return (
     <Layout>
       <Stack spacing={4}>

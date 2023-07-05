@@ -1,0 +1,28 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 2rem;
+  img {
+    object-fit: cover;
+    width: 40%;
+    max-height: 1000px;
+    height: auto;
+  }
+}
+
+.text {
+  font-size: 1.2rem;
+}
+
+.info {
+  width: 40%;
+}
+
+.header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
