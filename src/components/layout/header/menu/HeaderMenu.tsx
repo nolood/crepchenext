@@ -29,9 +29,9 @@ const HeaderMenu: FC<HeaderMenuProps> = ({ children }) => {
     setOpenMenu(false);
   };
   const menuClasses = classNames(styles.menu, { [styles.active]: openMenu });
-  useEffect(() => {
-    dispatch(checkIsAuth());
-  }, [isAuth]);
+  // useEffect(() => {
+  //   dispatch(checkIsAuth());
+  // }, [isAuth]);
   useEffect(() => {
     const basket =
       JSON.parse(localStorage.getItem("krepche-basket") || "null") || [];

@@ -46,6 +46,25 @@ export const checkIsAuth = createAsyncThunk(
   }
 );
 
+export const sendBasket = createAsyncThunk(
+  "user/sendBasketStatus",
+  async (formData: {
+    name: string;
+    surname: string;
+    phone: string;
+    items: IBasketOrig[];
+  }) => {
+    const { name, surname, phone, items } = formData;
+    const basket = items.map((item) => [item.id, item.count]);
+    await axios.post(`${process.env.API_URL}basket/`, {
+      name,
+      surname,
+      phone,
+      items: JSON.stringify(basket),
+    });
+  }
+);
+
 export const getBasket = createAsyncThunk("user/getBasketStatus", async () => {
   const ids: IBasket[] =
     JSON.parse(String(localStorage.getItem("krepche-basket"))) || [];
