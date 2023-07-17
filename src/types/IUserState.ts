@@ -2,6 +2,7 @@ import { AlertColor } from "@mui/material";
 import { IItem } from "./IItem";
 import { IBasket } from "./IBasket";
 import { IBasketOrig } from "./IBasketOrig";
+import { IOffer } from "./IOffer";
 
 export interface IUserState {
   isAuth: boolean;
@@ -15,4 +16,5 @@ export interface IUserState {
   basketOrig: IBasketOrig[] | Array<IBasketOrig | null>;
   searchValue: string;
   searchItems: IItem[];
+  offers: IOffer[];
 }

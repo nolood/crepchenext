@@ -10,6 +10,7 @@ import CatalogInfo from "./cataloginfo/CatalogInfo";
 import BreadCrumbs from "@/components/common/breadcrumbs/BreadCrumbs";
 import Search from "./search/Search";
 import CatalogSearchList from "@/components/catalogsearchlist/CatalogSearchList";
+import MenuBtn from "@/components/common/menubtn/MenuBtn";
 
 interface CatalogProps {
   subcategories: ISubcategory[];
@@ -27,14 +28,20 @@ const Catalog: FC<CatalogProps> = ({
   return (
     <Layout>
       <div className={styles.header}>
-        <h1 className={styles.title}>Каталог</h1>
+        <h2 className={styles.title}>Каталог</h2>
         <BreadCrumbs categories={categories} subcategories={subcategories} />
+        <MenuBtn
+          categoryId={categoryId}
+          categories={categories}
+          subcategories={subcategories}
+        />
       </div>
       <div className={styles.wrapper}>
         <AsideMenu
           subcategories={subcategories}
           categories={categories}
           categoryId={categoryId}
+          isVisible={true}
         />
         <div className={styles.catalog}>
           <Search />

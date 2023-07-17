@@ -1,6 +1,7 @@
 "use client";
 
 import Layout from "@/components/layout/Layout";
+import OffersList from "@/components/offerslist/OffersList";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -12,7 +13,11 @@ const Offer = () => {
       router.replace("/");
     }
   }, []);
-  return <Layout>dasdas</Layout>;
+  return (
+    <Layout>
+      <OffersList />
+    </Layout>
+  );
 };
 
 export default Offer;

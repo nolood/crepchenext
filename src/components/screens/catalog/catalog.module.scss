@@ -13,9 +13,25 @@
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
+  @media (max-width: 850px) {
+    justify-content: space-between;
+  }
+
+  @media (max-width: 404px) {
+    justify-content: flex-end;
+  }
+
+  h2 {
+    @media (max-width: 404px) {
+      display: none;
+    }
+  }
 }
 
 .catalog {
   width: 100%;
   padding-left: 2rem;
+  @media (max-width: 850px) {
+    padding-left: 0;
+  }
 }

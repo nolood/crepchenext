@@ -12,3 +12,5 @@ export const selectSearchValue = (state: { user: IUserState }) =>
 
 export const selectSearchItems = (state: { user: IUserState }) =>
   state.user.searchItems;
+
+export const selectOffers = (state: { user: IUserState }) => state.user.offers;

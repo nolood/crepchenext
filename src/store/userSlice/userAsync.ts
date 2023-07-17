@@ -97,7 +97,27 @@ export const getSearchItems = createAsyncThunk(
   }
 );
 
+export const fetchOffers = createAsyncThunk(
+  "user/fetchOffersStatus",
+  async () => {
+    const offers = await axios.get(`${process.env.API_URL}basket/offers`);
+    return offers.data;
+  }
+);
+
 export const extraReducers = (builder: ActionReducerMapBuilder<IUserState>) => {
+  builder.addCase(sendBasket.fulfilled, (state) => {
+    state.message = {
+      open: true,
+      title: "Заказ успешно отправлен!",
+      type: "success",
+    };
+  });
+
+  builder.addCase(fetchOffers.fulfilled, (state, action) => {
+    state.offers = action.payload.items.reverse();
+  });
+
   builder.addCase(getSearchItems.fulfilled, (state, action) => {
     //@ts-ignore
     state.searchItems = action.payload;

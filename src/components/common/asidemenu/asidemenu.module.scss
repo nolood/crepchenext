@@ -2,6 +2,19 @@
   margin: 0;
   padding: 0;
   list-style: none;
+  @media (max-width: 850px) {
+    display: none;
+    position: absolute;
+    top: 83px;
+    left: 0;
+  }
+}
+
+.active {
+  z-index: 9999;
+  @media (max-width: 850px) {
+    display: block !important;
+  }
 }
 
 .category {

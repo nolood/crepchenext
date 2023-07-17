@@ -18,6 +18,7 @@ const initialState: IUserState = {
   basketOrig: [],
   searchValue: "",
   searchItems: [],
+  offers: [],
 };
 
 const userSlice = createSlice({

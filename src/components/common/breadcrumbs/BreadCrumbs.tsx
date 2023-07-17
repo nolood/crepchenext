@@ -45,7 +45,7 @@ const BreadCrumbs: FC<BreadCrumbsProps> = ({ categories, subcategories }) => {
   }, [locationParams, categories, subcategories]);
 
   return (
-    <div>
+    <div className={styles.bread}>
       <Breadcrumbs aria-label="breadcrumb">
         <Link className={styles.link} href="catalog">
           Каталог

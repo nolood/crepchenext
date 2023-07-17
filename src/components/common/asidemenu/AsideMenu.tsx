@@ -10,20 +10,24 @@ interface AsideMenuProps {
   categories?: ICategory[];
   subcategories?: ISubcategory[];
   categoryId?: string;
+  isVisible?: boolean;
+  active?: boolean;
 }
 
 const AsideMenu: FC<AsideMenuProps> = ({
   categories,
   subcategories,
   categoryId,
+  isVisible,
+  active,
 }) => {
   const categoryTitle = categories?.find(
     (category) => category.id.toString() === categoryId
   )?.title;
 
-  if (subcategories)
+  if (subcategories && isVisible)
     return (
-      <ul className={styles.list}>
+      <ul className={active ? `${styles.list} ${styles.active}` : styles.list}>
         <li>
           <Link className={styles.category} href={`catalog`}>
             <span>Назад</span>
@@ -47,14 +51,16 @@ const AsideMenu: FC<AsideMenuProps> = ({
         ))}
       </ul>
     );
-  return (
-    <ul className={styles.list}>
-      {categories?.length &&
-        categories.map(({ id, title }) => (
-          <AsideMenuItem key={id} title={title} id={id} />
-        ))}
-    </ul>
-  );
+  if (categories && isVisible) {
+    return (
+      <ul className={active ? `${styles.list} ${styles.active}` : styles.list}>
+        {categories?.length &&
+          categories.map(({ id, title }) => (
+            <AsideMenuItem key={id} title={title} id={id} />
+          ))}
+      </ul>
+    );
+  }
 };
 
 export default AsideMenu;
