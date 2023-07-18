@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    API_URL: "http://krepcheapi.ru/api/",
+    API_URL: "https://krepcheapi.ru/api/",
     PASS: "SADDSA432423",
   },
   images: {
